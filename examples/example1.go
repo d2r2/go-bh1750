@@ -41,14 +41,14 @@ func main() {
 	if err != nil {
 		lg.Fatal(err)
 	}
-	// Reset sensivity factor to default value
+	// Reset sensitivity factor to default value
 	err = sensor.ChangeSensivityFactor(i2c, sensor.GetDefaultSensivityFactor())
 	if err != nil {
 		lg.Fatal(err)
 	}
 
 	lg.Notify("**********************************************************************************************")
-	lg.Notify("*** Measure ambient one time")
+	lg.Notify("*** Measure ambient light one time")
 	lg.Notify("**********************************************************************************************")
 	// err = sensor.PowerOn(i2c)
 	// if err != nil {
@@ -56,48 +56,48 @@ func main() {
 	// }
 
 	resolution := bh1750.LowResolution
-	amb, err := sensor.MeasureAmbientOneTime(i2c, resolution)
+	amb, err := sensor.MeasureAmbientLightOneTime(i2c, resolution)
 	if err != nil {
 		lg.Fatal(err)
 	}
-	lg.Infof("Ambient (%s) = %v lx", resolution, amb)
+	lg.Infof("Ambient light (%s) = %v lx", resolution, amb)
 	resolution = bh1750.HighResolution
-	amb, err = sensor.MeasureAmbientOneTime(i2c, resolution)
+	amb, err = sensor.MeasureAmbientLightOneTime(i2c, resolution)
 	if err != nil {
 		lg.Fatal(err)
 	}
-	lg.Infof("Ambient (%s) = %v lx", resolution, amb)
+	lg.Infof("Ambient light (%s) = %v lx", resolution, amb)
 	resolution = bh1750.HighestResolution
-	amb, err = sensor.MeasureAmbientOneTime(i2c, resolution)
+	amb, err = sensor.MeasureAmbientLightOneTime(i2c, resolution)
 	if err != nil {
 		lg.Fatal(err)
 	}
-	lg.Infof("Ambient (%s) = %v lx", resolution, amb)
+	lg.Infof("Ambient light (%s) = %v lx", resolution, amb)
 
 	lg.Notify("**********************************************************************************************")
-	lg.Notify("*** Measure ambient continuously")
+	lg.Notify("*** Measure ambient light continuously")
 	lg.Notify("**********************************************************************************************")
 	resolution = bh1750.HighResolution
-	wait, err := sensor.StartMeasureAmbientContinuously(i2c, resolution)
+	wait, err := sensor.StartMeasureAmbientLightContinuously(i2c, resolution)
 	if err != nil {
 		lg.Fatal(err)
 	}
 	done := make(chan struct{})
 	defer close(done)
-	// Create context with cancelation possibility.
+	// Create context with cancellation possibility.
 	ctx, cancel := context.WithCancel(context.Background())
-	// Run goroutine waiting for OS termantion events, including keyboard Ctrl+C.
+	// Run goroutine waiting for OS termination events, including keyboard Ctrl+C.
 	shell.CloseContextOnKillSignal(cancel, done)
 	for i := 0; i < 10; i++ {
 		// err = sensor.Reset(i2c)
 		// if err != nil {
 		// 	lg.Fatal(err)
 		// }
-		amb, err := sensor.FetchMeasuredAmbient(i2c)
+		amb, err := sensor.FetchMeasuredAmbientLight(i2c)
 		if err != nil {
 			lg.Fatal(err)
 		}
-		lg.Infof("Ambient (%s) = %v lx", resolution, amb)
+		lg.Infof("Ambient light (%s) = %v lx", resolution, amb)
 		select {
 		// Check for termination request.
 		case <-ctx.Done():
@@ -107,7 +107,7 @@ func main() {
 			}
 			lg.Fatal(ctx.Err())
 
-			// Wait recomended duration.
+			// Wait recommended duration.
 			// You can increase delay - this
 			// doesn't affect to measured value.
 		case <-time.After(wait):
@@ -119,29 +119,29 @@ func main() {
 	}
 
 	lg.Notify("**********************************************************************************************")
-	lg.Notify("*** Increase light sensivity factor in 2 times and repeat measures")
+	lg.Notify("*** Increase light sensitivity factor in 2 times and repeat measures")
 	lg.Notify("**********************************************************************************************")
 	err = sensor.ChangeSensivityFactor(i2c, 138)
 	if err != nil {
 		lg.Fatal(err)
 	}
 	resolution = bh1750.LowResolution
-	amb, err = sensor.MeasureAmbientOneTime(i2c, resolution)
+	amb, err = sensor.MeasureAmbientLightOneTime(i2c, resolution)
 	if err != nil {
 		lg.Fatal(err)
 	}
-	lg.Infof("Ambient (%s) = %v lx", resolution, amb)
+	lg.Infof("Ambient light (%s) = %v lx", resolution, amb)
 	resolution = bh1750.HighResolution
-	amb, err = sensor.MeasureAmbientOneTime(i2c, resolution)
+	amb, err = sensor.MeasureAmbientLightOneTime(i2c, resolution)
 	if err != nil {
 		lg.Fatal(err)
 	}
-	lg.Infof("Ambient (%s) = %v lx", resolution, amb)
+	lg.Infof("Ambient light (%s) = %v lx", resolution, amb)
 	resolution = bh1750.HighestResolution
-	amb, err = sensor.MeasureAmbientOneTime(i2c, resolution)
+	amb, err = sensor.MeasureAmbientLightOneTime(i2c, resolution)
 	if err != nil {
 		lg.Fatal(err)
 	}
-	lg.Infof("Ambient (%s) = %v lx", resolution, amb)
+	lg.Infof("Ambient light (%s) = %v lx", resolution, amb)
 
 }

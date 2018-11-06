@@ -100,7 +100,7 @@ func NewBH1750() *BH1750 {
 	return v
 }
 
-// Reset clear ambient register value.
+// Reset clear ambient light register value.
 func (v *BH1750) Reset(i2c *i2c.I2C) error {
 	lg.Debug("Reset sensor...")
 	_, err := i2c.WriteBytes([]byte{CMD_RESET})
@@ -163,8 +163,8 @@ func (v *BH1750) getResolutionData(resolution ResolutionMode) (cmd byte,
 	return cmd, wait, divider
 }
 
-// MeasureAmbientOneTime measure and return ambient once in lux.
-func (v *BH1750) MeasureAmbientOneTime(i2c *i2c.I2C,
+// MeasureAmbientLightOneTime measure and return ambient light once in lux.
+func (v *BH1750) MeasureAmbientLightOneTime(i2c *i2c.I2C,
 	resolution ResolutionMode) (uint16, error) {
 
 	lg.Debug("Run one time measure...")
@@ -195,11 +195,11 @@ func (v *BH1750) MeasureAmbientOneTime(i2c *i2c.I2C,
 	return amb, nil
 }
 
-// StartMeasureAmbientContinuously start continuous measurement process.
-// Use FetchMeasuredAmbient to get average ambient amount
-// collected and calculated over a time.
+// StartMeasureAmbientLightContinuously start continuous
+// measurement process. Use FetchMeasuredAmbientLight to get
+// average ambient light amount collected and calculated over a time.
 // Use PowerDown to stop measurements and return sensor to idle state.
-func (v *BH1750) StartMeasureAmbientContinuously(i2c *i2c.I2C,
+func (v *BH1750) StartMeasureAmbientLightContinuously(i2c *i2c.I2C,
 	resolution ResolutionMode) (wait time.Duration, err error) {
 
 	lg.Debug("Start measures continuously...")
@@ -228,17 +228,18 @@ func (v *BH1750) StartMeasureAmbientContinuously(i2c *i2c.I2C,
 	return wait, nil
 }
 
-// FetchMeasuredAmbient return current average ambient in lux.
+// FetchMeasuredAmbientLight return current average ambient light in lux.
 // Previous command should be any continuous measurement initiation,
 // otherwise error will be reported.
-func (v *BH1750) FetchMeasuredAmbient(i2c *i2c.I2C) (uint16, error) {
+func (v *BH1750) FetchMeasuredAmbientLight(i2c *i2c.I2C) (uint16, error) {
 
-	lg.Debug("Fetch measured ambient...")
+	lg.Debug("Fetch measured data...")
 
 	cmd, _, divider := v.getResolutionData(v.lastResolution)
 
 	if v.lastCmd != cmd {
-		return 0, errors.New("can't fetch ambient, since last command doesn't match")
+		return 0, errors.New(
+			"can't fetch measured ambient light, since last command doesn't match")
 	}
 
 	var data struct {
@@ -265,8 +266,8 @@ func (v *BH1750) GetDefaultSensivityFactor() byte {
 // ChangeSensivityFactor used when you close sensor
 // with protection cover, which change (ordinary decrease)
 // expected amount of light falling on the sensor.
-// In this case you should calibrate you sensor and
-// find appropriate factor to get in output correct ambient value.
+// In this case you should calibrate you sensor and find
+// appropriate factor to get in output correct ambient light value.
 // Be aware, that improving sensitivity will increase
 // measurement time.
 func (v *BH1750) ChangeSensivityFactor(i2c *i2c.I2C, factor byte) error {

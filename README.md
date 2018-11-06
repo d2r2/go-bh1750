@@ -1,5 +1,5 @@
 
-BH1750 ambient sensor
+BH1750 ambient light sensor
 =====================
 
 [![Build Status](https://travis-ci.org/d2r2/go-bh1750.svg?branch=master)](https://travis-ci.org/d2r2/go-bh1750)
@@ -7,10 +7,10 @@ BH1750 ambient sensor
 [![GoDoc](https://godoc.org/github.com/d2r2/go-bh1750?status.svg)](https://godoc.org/github.com/d2r2/go-bh1750)
 [![MIT License](http://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 
-BH1750 ([general specification](https://raw.github.com/d2r2/go-bh1750/master/docs/bh1750fvi-e-186247.pdf)) ambient sensor which return measured value in lux units. Easily integrated with Arduino and Raspberry PI via i2c communication interface:
+BH1750 ([general specification](https://raw.github.com/d2r2/go-bh1750/master/docs/bh1750fvi-e-186247.pdf)) is a power effective ambient light sensor with spectral response close to human eye. Sensor returns measured light value in lux units. Easily integrated with Arduino and Raspberry PI via i2c communication interface:
 ![image](https://raw.github.com/d2r2/go-bh1750/master/docs/SHT3X.jpg)
 
-Here is a library written in [Go programming language](https://golang.org/) for Raspberry PI and counterparts, which gives you in the output relative humidity and temperature values (making all necessary i2c-bus interacting and values computing).
+Here is a library written in [Go programming language](https://golang.org/) for Raspberry PI and counterparts, which gives you in the output ambient light value (making all necessary i2c-bus interacting and values computing).
 
 Golang usage
 ------------
@@ -33,7 +33,7 @@ func main() {
 	if err != nil {
 		lg.Fatal(err)
 	}
-	log.Printf("Ambient (%s) = %v lx", resolution, amb)
+	log.Printf("Ambient light (%s) = %v lx", resolution, amb)
 ```
 
 
