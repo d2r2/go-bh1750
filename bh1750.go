@@ -184,8 +184,8 @@ func (v *BH1750) getResolutionData(resolution ResolutionMode) (cmd byte,
 	return cmd, wait, divider
 }
 
-// MeasureAmbientLightOneTime measure and return ambient light once in lux.
-func (v *BH1750) MeasureAmbientLightOneTime(i2c *i2c.I2C,
+// MeasureAmbientLight measure and return ambient light once in lux.
+func (v *BH1750) MeasureAmbientLight(i2c *i2c.I2C,
 	resolution ResolutionMode) (uint16, error) {
 
 	lg.Debug("Run one time measure...")

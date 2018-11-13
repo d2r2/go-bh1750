@@ -77,33 +77,14 @@ func calcCRC1(seed byte, buf []byte) byte {
 	return seed
 }
 
-// Verified to work with Si7021.
-// Initialize seed with 0x00 value.
-// Right CRC calculation routine taken from Silicon Labs forum:
-// https://www.silabs.com/community/sensors/forum.topic.html/how_to_calculatecrc-sCTY
-func calcCRC_SI7021(seed byte, buf []byte) byte {
-	for i := 0; i < len(buf); i++ {
-		seed ^= buf[i]
-		for j := 0; j < 8; j++ {
-			if seed&0x80 != 0 {
-				seed <<= 1
-				seed ^= 0x31
-			} else {
-				seed <<= 1
-			}
-		}
-	}
-	return seed
-}
-
-// Round float amount to certain procision.
+// Round float amount to certain precision.
 func round64(value float64, precision int) float64 {
 	value2 := math.Round(value*math.Pow10(precision)) /
 		math.Pow10(precision)
 	return value2
 }
 
-// Round float amount to certain procision.
+// Round float amount to certain precision.
 func round32(value float32, precision int) float32 {
 	return float32(round64(float64(value), precision))
 }

@@ -17,7 +17,7 @@ var lg = logger.NewPackageLogger("main",
 
 func main() {
 	defer logger.FinalizeLogger()
-	// Create new connection to i2c-bus on 1 line with address 0x40.
+	// Create new connection to i2c-bus on 1 line with address 0x23.
 	// Use i2cdetect utility to find device address over the i2c-bus
 	i2c, err := i2c.NewI2C(0x23, 0)
 	if err != nil {
@@ -56,19 +56,19 @@ func main() {
 	// }
 
 	resolution := bh1750.LowResolution
-	amb, err := sensor.MeasureAmbientLightOneTime(i2c, resolution)
+	amb, err := sensor.MeasureAmbientLight(i2c, resolution)
 	if err != nil {
 		lg.Fatal(err)
 	}
 	lg.Infof("Ambient light (%s) = %v lx", resolution, amb)
 	resolution = bh1750.HighResolution
-	amb, err = sensor.MeasureAmbientLightOneTime(i2c, resolution)
+	amb, err = sensor.MeasureAmbientLight(i2c, resolution)
 	if err != nil {
 		lg.Fatal(err)
 	}
 	lg.Infof("Ambient light (%s) = %v lx", resolution, amb)
 	resolution = bh1750.HighestResolution
-	amb, err = sensor.MeasureAmbientLightOneTime(i2c, resolution)
+	amb, err = sensor.MeasureAmbientLight(i2c, resolution)
 	if err != nil {
 		lg.Fatal(err)
 	}
@@ -126,19 +126,19 @@ func main() {
 		lg.Fatal(err)
 	}
 	resolution = bh1750.LowResolution
-	amb, err = sensor.MeasureAmbientLightOneTime(i2c, resolution)
+	amb, err = sensor.MeasureAmbientLight(i2c, resolution)
 	if err != nil {
 		lg.Fatal(err)
 	}
 	lg.Infof("Ambient light (%s) = %v lx", resolution, amb)
 	resolution = bh1750.HighResolution
-	amb, err = sensor.MeasureAmbientLightOneTime(i2c, resolution)
+	amb, err = sensor.MeasureAmbientLight(i2c, resolution)
 	if err != nil {
 		lg.Fatal(err)
 	}
 	lg.Infof("Ambient light (%s) = %v lx", resolution, amb)
 	resolution = bh1750.HighestResolution
-	amb, err = sensor.MeasureAmbientLightOneTime(i2c, resolution)
+	amb, err = sensor.MeasureAmbientLight(i2c, resolution)
 	if err != nil {
 		lg.Fatal(err)
 	}

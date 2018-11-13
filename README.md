@@ -7,8 +7,8 @@ BH1750 ambient light sensor
 [![GoDoc](https://godoc.org/github.com/d2r2/go-bh1750?status.svg)](https://godoc.org/github.com/d2r2/go-bh1750)
 [![MIT License](http://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 
-BH1750 ([general specification](https://raw.github.com/d2r2/go-bh1750/master/docs/bh1750fvi-e-186247.pdf)) is a power effective ambient light sensor with spectral response close to human eye. Sensor returns measured light value in lux units. Easily integrated with Arduino and Raspberry PI via i2c communication interface:
-![image](https://raw.github.com/d2r2/go-bh1750/master/docs/SHT3X.jpg)
+BH1750 ([general specification](https://raw.github.com/d2r2/go-bh1750/master/docs/bh1750fvi-e-186247.pdf)) is a power effective ambient light sensor with spectral response close to human eye. Sensor returns measured ambient light value in lux units. Easily integrated with Arduino and Raspberry PI via i2c communication interface:
+![image](https://raw.github.com/d2r2/go-bh1750/master/docs/bh1750.jpg)
 
 Here is a library written in [Go programming language](https://golang.org/) for Raspberry PI and counterparts, which gives you in the output ambient light value (making all necessary i2c-bus interacting and values computing).
 
@@ -29,7 +29,7 @@ func main() {
 	sensor := bh1750.NewBH1750()
 
 	resolution := bh1750.HighResolution
-	amb, err := sensor.MeasureAmbientOneTime(i2c, resolution)
+	amb, err := sensor.MeasureAmbientLight(i2c, resolution)
 	if err != nil {
 		lg.Fatal(err)
 	}
